@@ -1,4 +1,4 @@
-var jwt = require("jsonwebtoken");
+let jwt = require("jsonwebtoken");
 
 exports.jwt_decode = (req, res, next) => {
   let decoded = jwt.verify(req.headers.token, "secret");
