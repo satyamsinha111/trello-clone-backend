@@ -2,9 +2,9 @@ const express = require("express");
 const router = express.Router();
 const { auth } = require("../middlewares");
 const { connection } = require("../db");
-const res = require("express/lib/response");
 router.use(auth.jwt_decode);
 //TODO: Integrate Git Flow
+
 router.post("/project", (req, res) => {
   console.log(req.user);
   connection.query(
@@ -45,6 +45,21 @@ router.post("/project", (req, res) => {
     }
   );
   // res.send("Hello");
+});
+
+router.delete("/project/:projectId", (req, res) => {
+  connection.query(
+    `DELETE FROM Projects WHERE ProjectID='${req.params.projectId}'`,
+    (err, rows, fields) => {
+      if (err) {
+        throw err;
+      } else {
+        res.status(200).json({
+          message: "Project deleted successfully",
+        });
+      }
+    }
+  );
 });
 
 router.get("/project", (req, res) => {
